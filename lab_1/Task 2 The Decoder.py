@@ -18,7 +18,7 @@ def print_dictionary(dictionary: dict) -> None:
 dictionary_chastot = creat_dict(original_text)
 print_dictionary(dictionary_chastot)
 
-original_text = original_text.replace('-', '\n')
+original_text = original_text.replace('-', ' ')
 
 original_text = original_text.replace('/', 'К')
 original_text = original_text.replace('2', 'И')
