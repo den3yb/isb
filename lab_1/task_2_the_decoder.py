@@ -3,15 +3,15 @@ import json
 import sys
 
 
-def creat_dict(text: str) -> dict:
+def creat_dict(text: str) -> dict[str:float]:
     """Создаёт словарь из входной строки,  в качестве ключа - слово, в качестве значения - частота встречи"""
     long = len(original_text)
     dictionary = {}
     for symbol in text:
         if symbol in dictionary:
-            dictionary[symbol] += 1 / long * 100
+            dictionary[symbol] += 1 / long 
         else:
-            dictionary[symbol] = 1 / long * 100
+            dictionary[symbol] = 1 / long 
 
     return dictionary
 
@@ -23,78 +23,41 @@ def print_dictionary(dictionary: dict) -> None:
 
 
 if __name__ == "__main__":
-    if os.path.exists("C:\\Proganiy\\OiB\\isb\\lab_1\\task_2_ways.json"):
-        json_file = open(
-            "C:\\Proganiy\\OiB\\isb\\lab_1\\task_2_ways.json", "r", encoding="utf-8"
-        )
+    way={1: 'isb\\lab_1\\task_2_ways.json'}
+    try:
+        json_file = open( way[1], "r", encoding="utf-8")
         ways = json.load(json_file)
-    else:
-        print("Невверно указан путь к json файлу")
-        sys.exit()
+    except Exception as e:
+        print("Ошибка при открытие файла json: ", e)
 
-
-    if os.path.exists(ways[0]):
+    try:
         file_in = open(ways[0], "r", encoding="utf-8")
         original_text = file_in.readline()
-        if (original_text == ''):
-            print("Заданный текст не прописан")
-            sys.exit()
         file_in.close()
-    else:
-        print("Неверно указан путь к файлу с оригинальным текстом")
-        sys.exit()
+    except Exception as e:
+        print("Ошибка открытия файла с оригинальным текстом: ", e)
 
-    dictionary_chastot = creat_dict(original_text)
-    print_dictionary(dictionary_chastot)
+    try:
+        dictionary_frequency = creat_dict(original_text)
+        print_dictionary(dictionary_frequency)
+    except Exception as e:
+        print("Ошибка при обработке словаря частот встреч", e)
 
-    file_key = open("isb\lab_1\Task 2 Key.txt", "w", encoding="utf-8")
-    dic_key={
-        '-': ' ',
-        '/': 'К',
-        '2': 'И',
-        'n': 'С',
-        '8': 'В',
-        '6': 'А',
-        's': 'Ь',
-        '5': 'Д',
-        'e': 'О',
-        'r': 'П',
-        '3': '3',
-        '0': 'Е',
-        'i': 'Т',
-        'w': 'Н',
-        'm': 'Р',
-        'q': 'М',
-        '\\': 'Л',
-        ';': 'Ы',
-        '`': 'Я',
-        '7': 'Б',
-        't': 'Х',
-        '1': 'Й',
-        'k': 'Ч',
-        'o': 'У',
-        'z': 'Ю',
-        'c': 'Щ',
-        'p': 'Ф',
-        '9': 'Г',
-        'f': 'Ц',
-        'd': 'Ш',
-        '4': 'Ж',
-        '?': 'Ъ',
-        'x': 'Э'
-    }
+    try:
+        file_key = open(ways[1], "r", encoding="utf-8")
+        dic_key=json.load(file_key)
 
-    for k in dic_key.keys():
-        print(k, " — ", dic_key[k])
-        file_key.write(k + " — " + dic_key[k] + "\n")
-        original_text = original_text.replace(k, dic_key[k])
+        for k in dic_key.keys():
+            print(k, " — ", dic_key[k])
+            original_text = original_text.replace(k, dic_key[k])
 
-    file_key.close()
+        file_key.close()
+    except Exception as e:
+        print("Возникла ошибка при чтение ключа и/или дешифровки текста", e)
 
-    if os.path.exists(ways[2]):
+    try:
         file_out = open(ways[2], "w", encoding="utf-8")
         file_out.write(original_text)
         file_out.close()
-    else:
-        print("Неверно указан путь к файлу с оригинальным текстом")
-        sys.exit()
+    except Exception as e:
+        print("Ошибка при записи расшифрованного текста", e)
