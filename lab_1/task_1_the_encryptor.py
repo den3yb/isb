@@ -5,6 +5,8 @@ import io
 import codecs
 import sys
 
+from the_json_way_1 import WAY
+
 
 def clean(text: str) -> str:
     """Удаляет все символы кроме букв в входном тексте, даже пробелы, делает все буквы маленькими"""
@@ -17,13 +19,8 @@ def encrypt(text: str) -> str:
     """Шифрует входной текст, врзвращает зашифрованный"""
 
     try:
-        file_c = open(ways[2], "r", encoding="utf-8")
-        try:
+        with open(ways[2], "r", encoding="utf-8") as file_c:
             const = int(file_c.readline())
-            file_c.close()
-        except Exception as e:
-            print("При чтение константы возникла ошибка: ", e)
-            file_c.close()
     except Exception as e:
         print("При работе с файлом констант возникла ошибка: ", e)
 
@@ -32,7 +29,6 @@ def encrypt(text: str) -> str:
         text = text + "а"
         temp += 1
     quantity = int(temp / const)
-    print(quantity, "*", const, "=",len(text),"=",temp)
     cyphered = ""
     for j in range(0, const):
         for i in range(0, quantity):
@@ -45,49 +41,44 @@ def writing(text: str) -> None:
     """Осуществляет запись в файл-ключ"""
     
 
-    file_c = open(ways[2], "r", encoding="utf-8")
+    
     try:
-        const = int(file_c.readline())
-        file_c.close()
+        with open(ways[2], "r", encoding="utf-8") as file_c:
+            const = int(file_c.readline())
     except Exception as e:
         print("При чтение константы возникла ошибка: ", e)
-        file_c.close()
 
     c = int(len(text)/const)
-    print(len(text),"=", const,"*",c)
 
     try:
-        file_k = open(ways[1], "w", encoding="utf-8")
+        with open(ways[1], "w", encoding="utf-8") as file_k: 
+            for j in range(0, c):
+                for i in range(0, const):
+                    file_k.write(" " + text[c * i + j])
+                file_k.write("\n")
+            file_k.write(
+                "\n\n Записываем текст в строчку, когда заканчивается переходим на следующую, для шифровки после получение таблицы, выписывает столбцы"
+            )
     except Exception as e:
         print("При попытке открытия файла c ключом возникла ошибка: ", e)
 
-    for j in range(0, c):
-        for i in range(0, const):
-            file_k.write(" " + text[c * i + j])
-        file_k.write("\n")
-    file_k.write(
-        "\n\n Записываем текст в строчку, когда заканчивается переходим на следующую, для шифровки после получение таблицы, выписывает столбцы"
-    )
-    file_k.close()
+    
 
 
 
 if __name__ == "__main__":
-    way={1: 'isb\\lab_1\\task_1_way.json'}
     try:
-        json_file = open(
-            way[1], "r", encoding="utf-8"
-        )
-        ways = json.load(json_file)
+        with open( WAY, "r", encoding="utf-8") as json_file:
+            ways = json.load(json_file)
     except Exception as e:
         print("При попытке открытия файла с путями возникла ошибка: ", e)
 
     try:
-        file_in = open(ways[0], "r", encoding="utf-8")
-        original_text = file_in.readline()
-        if (original_text == ''):
-            print("Заданный текст не прописан")
-        file_in.close()
+        with open(ways[0], "r", encoding="utf-8") as file_in:
+            original_text = file_in.readline()
+            if (original_text == ''):
+                print("Заданный текст не прописан")
+            file_in.close()
     except Exception as e:
         print("При попытке открытия файла с путями возникла ошибка: ", e)
         

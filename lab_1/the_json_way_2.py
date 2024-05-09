@@ -1,0 +1,1 @@
+WAY='isb\\lab_1\\task_2_ways.json'
