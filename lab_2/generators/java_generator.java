@@ -1,15 +1,14 @@
 import java.util.Random;
 
 public class random_generator{
-    public static void RandomNumberGenerator() {
+    public static void RandomNumberGenerator(int size) {
         Random random = new Random();
-        System.out.print(random.nextInt(2));
+        for(int i = 0; i<size;i++){
+            System.out.print(random.nextInt(2));
+        }
     }
 
     public static void main(String[] args) {
-        int size =128;
-        for(int i = 0; i<size;i++){
-            RandomNumberGenerator();
-        }
+        RandomNumberGenerator(128);
     }
 }
