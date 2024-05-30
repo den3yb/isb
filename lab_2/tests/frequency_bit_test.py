@@ -7,12 +7,9 @@ from const import PATH, P
 
 
 def frequency_bit_test(seq: str) -> float:
-    s = 0
-    for bit in seq:
-        if bit == "1":
-            s += 1
-        elif bit == "0":
-            s += -1
+    s = seq.count("1")
+    temp = seq.count("0")
+    s = s - temp
     sn = s / (math.sqrt(len(seq)))
     sn = abs(sn)
     return math.erfc(sn / math.sqrt(2))
@@ -45,14 +42,15 @@ def longest_bit_seq(seq: str) -> float:
                 maximum = max(temp, maximum)
             else:
                 temp = 0
-        if maximum <= 1:
-            v[0] += 1
-        elif maximum == 2:
-            v[1] += 1
-        elif maximum == 3:
-            v[2] += 1
-        else:
-            v[3] += 1
+        match maximum:
+            case _ if maximum <= 1:
+                v[0] += 1
+            case 2:
+                v[1] += 1
+            case 3:
+                v[2] += 1
+            case _:
+                v[3] += 1
     x = 0
     for i in range(0, 4):
         x += (v[i] - 16 * P[i]) ** 2 / (16 * P[i])
