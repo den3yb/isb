@@ -42,9 +42,26 @@ if __name__ == "__main__":
         enc_text = encrypt_text(text, sym_key)
         try:
             with open (ways[4], "wb") as file:
-                print(enc_text)
                 file.write(enc_text)
         except Exception as e:
             print("Возникла ошибка при чтении файла с текста: ", e)
     else:
         print('3')
+        asym_key = deserylie_asym(ways[1], ways[2])
+        sym_key = deserialize_sym(ways[0])
+        sym_key = decrypt_sym_key(asym_key, sym_key)
+        try:
+            with open (ways[4], "rb") as file:
+                text = file.read()
+        except Exception as e:
+            print("Возникла ошибка при чтении файла с текста: ", e)
+        text = decode_text(text, sym_key)
+        try:
+            with open (ways[5], "w", encoding="utf-8") as file:
+                file.write(text)
+        except Exception as e:
+            print("Возникла ошибка записи расшифрованного текста: ", e)
+
+
+        
+        

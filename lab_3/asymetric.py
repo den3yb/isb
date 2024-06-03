@@ -8,7 +8,7 @@ from cryptography.hazmat.primitives.serialization import load_pem_public_key, lo
 def create_asym_key(size: int) -> dict:
     keys = rsa.generate_private_key(
     public_exponent=65537,
-    key_size=2048
+    key_size=1024
     )
     asym ={
         'private': keys,
