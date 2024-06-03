@@ -2,11 +2,12 @@ import argparse
 import json
  
 from asymetric import *
-from simmetric import *
+from symetric import *
 from const import WAY, SIZE
 
 if __name__ == "__main__":
 
+    print('start')
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group(required = True)
     group.add_argument('-gen','--generation',help='Запускает режим генерации ключей')
@@ -21,17 +22,29 @@ if __name__ == "__main__":
         print("Возникла ошибка открытия файла с путями")
 
     if args.generation is not None:
+        print('1')
         sym_key = create_sym_key()
         asym_key = create_asym_key(SIZE)
         cyph_sym_key = encrypt_sym_key(asym_key, sym_key)
-        serialize_private(asym_key, WAY[3])
-        serialize_public(asym_key, WAY[2])
-        serialize_sym(cyph_sym_key, WAY[1])
+        serialize_private(asym_key, ways[2])
+        serialize_public(asym_key, ways[1])
+        serialize_sym(cyph_sym_key, ways[0])
     elif args.encryption is not None:
         print('2')
-        asym_key = deserylie_asym(WAY[3], WAY[2])
-        sym_key = deserialize_sym(WAY[1])
+        asym_key = deserylie_asym(ways[1], ways[2])
+        sym_key = deserialize_sym(ways[0])
         sym_key = decrypt_sym_key(asym_key, sym_key)
-        
+        try:
+            with open (ways[3], "r",encoding="utf-8") as file:
+                text = file.read()
+        except Exception as e:
+            print("Возникла ошибка при чтении файла с текста: ", e)
+        enc_text = encrypt_text(text, sym_key)
+        try:
+            with open (ways[4], "wb") as file:
+                print(enc_text)
+                file.write(enc_text)
+        except Exception as e:
+            print("Возникла ошибка при чтении файла с текста: ", e)
     else:
         print('3')
