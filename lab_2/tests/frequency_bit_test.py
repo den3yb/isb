@@ -79,25 +79,19 @@ if __name__ == "__main__":
 
     try:
         cpp_res_freq = frequency_bit_test(cpp_seq)
-        print(cpp_res_freq)
         java_res_freq = frequency_bit_test(java_seq)
-        print(java_res_freq)
     except Exception as e:
-        print("Ошибка расчёта частотного побитового теста для с++: ", e)
+        print("Ошибка расчёта частотного побитового теста: ", e)
 
     try:
         cpp_res_same = same_bit_test(cpp_seq)
-        print(cpp_res_same)
         java_res_same = same_bit_test(java_seq)
-        print(java_res_same)
     except Exception as e:
         print("Ошибка расчёта теста на одинаковые подряд идущие биты: ", e)
 
     try:
         cpp_res_long = longest_bit_seq(cpp_seq)
-        print(cpp_res_long)
         java_res_long = longest_bit_seq(java_seq)
-        print(java_res_long)
     except Exception as e:
         print(
             "Ошибка расчёта теста на самую длинную последовательность единиц в блоке: ",
