@@ -2,6 +2,7 @@ from moduls.asymetric import Asymetric
 from moduls.symetric import Symetric
 from moduls.reader_writer import Texting
 
+
 class cryptography:
 
     def generation_proc(private_way: str, public_way: str, symm_way: str):
@@ -12,13 +13,12 @@ class cryptography:
         print("Произогло создание асимметричного ключа")
         cyph_sym_key = Asymetric.encrypt_sym_key(asym_key, sym_key)
         print("Произошла шифровка симметричного ключа")
-        Asymetric.serialize_private(asym_key, private_way)
+        Texting.serialize_private(asym_key, private_way)
         print("Произошла сериализация приватного ключа")
-        Asymetric.serialize_public(asym_key, public_way)
+        Texting.serialize_public(asym_key, public_way)
         print("Произошла сериализация пкбличчного ключа")
         Symetric.serialize_sym(cyph_sym_key, symm_way)
         print("Произошла сериализация симметричного ключа")
-
 
     def encryption_proc(
         encr_way: str, orig_way: str, private_way: str, public_way: str, symm_way: str
@@ -34,10 +34,8 @@ class cryptography:
         print("Произошло чтение оригинального текста")
         enc_text = Symetric.encrypt_text(text, sym_key)
         print("Произошло шифрование оригинального текста")
-        Texting.write_bytes(encr_way, enc_text )
+        Texting.write_bytes(encr_way, enc_text)
         print("Произошла запись зашифрованного текста")
-
-
 
     def decryption_proc(
         uncyph_way: str, encr_way: str, private_way: str, public_way: str, symm_way: str
@@ -49,7 +47,7 @@ class cryptography:
         print("Произошла десериализация симметричного ключа")
         sym_key = Asymetric.decrypt_sym_key(asym_key, sym_key)
         print("Произошло дешифрование симметричного ключа")
-        text =Texting.read_bytes(encr_way)
+        text = Texting.read_bytes(encr_way)
         print("Произошло чтение зашифрованного текста")
         text = Symetric.decode_text(text, sym_key)
         print("Произошла дешифровка текста")
