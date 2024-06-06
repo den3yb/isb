@@ -69,37 +69,33 @@ def longest_bit_seq(seq: str) -> float:
             e,
         )
 
+def read_json_file(path: str) -> list:
+        try:
+            with open(path, "r", encoding="UTF-8") as file:
+                return json.loads(file.read())
+        except Exception as e:
+            print("Возникла ошибка открытия файла json: ", e)
+
+def read_file(source_file_path: str) -> str:
+        try:
+            with open(source_file_path, "r", encoding="utf-8") as file:
+                return file.read()
+        except Exception as e:
+            print("Возникла ошибка при чтении файла: ", e)
+
 if __name__ == "__main__":
 
-    try:
-        with open(PATH, "r", encoding="utf-8") as json_file:
-            ways = json.load(json_file)
-    except Exception as e:
-        print("Ошибка при открытие файла json: ", e)
-
-    try:
-        with open(ways[0], "r", encoding="utf-8") as file_in:
-            cpp_seq = file_in.readline()
-    except Exception as e:
-        print("Ошибка открытия файла с последовательностью с++: ", e)
-
-    try:
-        with open(ways[1], "r", encoding="utf-8") as file_in:
-            java_seq = file_in.readline()
-    except Exception as e:
-        print("Ошибка открытия файла с последовательностью java: ", e)
-
+    ways = read_json_file(PATH)
+    
+    cpp_seq = read_file(ways[0])
+    java_seq = read_file(ways[1])
 
     cpp_res_freq = frequency_bit_test(cpp_seq)
     java_res_freq = frequency_bit_test(java_seq)
     
-
-
     cpp_res_same = same_bit_test(cpp_seq)
     java_res_same = same_bit_test(java_seq)
     
-
-   
     cpp_res_long = longest_bit_seq(cpp_seq)
     java_res_long = longest_bit_seq(java_seq)
 
