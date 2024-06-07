@@ -1,5 +1,4 @@
 import argparse
-import json
 
 from moduls.reader_writer import Texting
 from moduls.cryptography import cryptography
